@@ -5,14 +5,21 @@
  */
 package rest;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import facades.UserFacade;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import security.IUserFacade;
+import security.UserFacadeFactory;
+import utils.makeTestUsers;
 
 /**
  * REST Web Service
@@ -22,24 +29,44 @@ import javax.ws.rs.core.MediaType;
 @Path("demoall")
 public class All {
 
-  @Context
-  private UriInfo context;
+    IUserFacade facade = UserFacadeFactory.getInstance();
 
-  /**
-   * Creates a new instance of A
-   */
-  public All() {
-  }
+    @Context
+    private UriInfo context;
 
-  /**
-   * Retrieves representation of an instance of rest.All
-   * @return an instance of java.lang.String
-   */
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public String getText() {
-    System.out.println("XXXXXXXX---> "+System.getProperty("java.version"));
-    return " {\"message\" : \"result for all\"}";
-  }
+    /**
+     * Creates a new instance of A
+     */
+    public All() {
+    }
+
+    /**
+     * Retrieves representation of an instance of rest.All
+     *
+     * @return an instance of java.lang.String
+     */
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getText() {
+        System.out.println("XXXXXXXX---> " + System.getProperty("java.version"));
+        return " {\"message\" : \"result for all\"}";
+    }
+    
+    @Path("/create")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public void createDB() {
+        makeTestUsers.createDatabase();
+    }
+
+    @Path("/user")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void createUser(String jsonString) {
+        JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
+        facade.addUser(json.get("username").getAsString(), json.get("password").getAsString());
+
+    }
 
 }
