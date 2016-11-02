@@ -13,7 +13,7 @@ app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
         $scope.Country = {
             availableOptions: [
                 {id: '1', name: 'DK', value: 'dk'},
-                {id: '2', name: 'NO', value: 'no'},
+                {id: '2', name: 'NO', value: 'no'}
             ],
             selectedOption: {id: '1', name: 'DK', value: 'dk'}
         };
@@ -24,7 +24,7 @@ app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
                 {id: '2', name: 'VAT Number', value: 'vat'},
                 {id: '3', name: 'Firm Name', value: 'name'},
                 {id: '4', name: 'Production Unit', value: 'produ'},
-                {id: '5', name: 'Phone Number', value: 'phone'},
+                {id: '5', name: 'Phone Number', value: 'phone'}
             ],
             selectedOption: {id: '1', name: 'Normal', value: 'search'}
         };
@@ -39,12 +39,16 @@ app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
                 first += "%20" + $scope.searchText.substring(4);
             }
             $http.get('http://cvrapi.dk/api?' + $scope.Option.selectedOption.value + '=' + first + '&country=' + $scope.Country.selectedOption.value, { 
-                headers: {'User-Agent': 'CVR API-CA3 CPH-Business Exercise-Phillip-cph-pb115@cphbusiness.dk'}
+                headers: {
+                    'User-Agent': 'CVR API-CA3 CPH-Business Exercise-Phillip-cph-pb115@cphbusiness.dk'
+                }, 
+                skipAuthorization: true
             })
                     .success(function (data, status, headers, config) {
                         if (data.error) {
                             alert("Error: " + data.message);
                         }
+                        $scope.dataReady = true;
                         $scope.info = data;
                         console.log(data);
 
