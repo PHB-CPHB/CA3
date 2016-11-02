@@ -9,7 +9,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
-app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
+app.controller('View3Ctrl', ['$http', '$scope', '$mdDialog', function ($http, $scope, $mdDialog) {
         $scope.Country = {
             availableOptions: [
                 {id: '1', name: 'DK', value: 'dk'},
@@ -38,10 +38,10 @@ app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
                 first = $scope.searchText.substring(0, 4);
                 first += "%20" + $scope.searchText.substring(4);
             }
-            $http.get('http://cvrapi.dk/api?' + $scope.Option.selectedOption.value + '=' + first + '&country=' + $scope.Country.selectedOption.value, { 
+            $http.get('http://cvrapi.dk/api?' + $scope.Option.selectedOption.value + '=' + first + '&country=' + $scope.Country.selectedOption.value, {
                 headers: {
                     'User-Agent': 'CVR API-CA3 CPH-Business Exercise-Phillip-cph-pb115@cphbusiness.dk'
-                }, 
+                },
                 skipAuthorization: true
             })
                     .success(function (data, status, headers, config) {
@@ -57,6 +57,27 @@ app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
                         console.log("Error " + data);
                     });
         };
+        $scope.getSpecifikCompany = function (id) {
+            for (var i = 0; i < $scope.info.productionunits.length(); i++) {
+                if ($scope.info.productionunits.name === id) {
+                        $mdDialog.show({
+                            controller: DialogController,
+                            templateUrl: 'dialog1.tmpl.html',
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            clickOutsideToClose: true,
+                            fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                        })
+                                .then(function (answer) {
+                                    $scope.status = 'You said the information was "' + answer + '".';
+                                }, function () {
+                                    $scope.status = 'You cancelled the dialog.';
+                                });
+                } else {
+
+                }
+            }
+        };
 //    $scope.info;
 //    $scope.getInfo = function(){ 
 //        companyInfoFactory.getInfo($scope.searchText, $scope.Country, $scope.Option).then(function(data){
@@ -65,6 +86,12 @@ app.controller('View3Ctrl', ['$http', '$scope', function ($http, $scope) {
 //        
 //    };
     }]);
+
+app.directive('modalDirective', function () {
+    return {
+        templateUrl: 'modal.html'
+    };
+});
 
 app.factory('companyInfoFactory', ['$http', function ($http) {
         var getInfo = function (searchText, Country, Option) {
