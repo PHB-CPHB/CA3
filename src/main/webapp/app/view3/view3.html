@@ -10,14 +10,14 @@
         <h4><label class="label label-info">Option</label></h4>
         <select name="mySelect" id="mySelect"
                 ng-options="option.name for option in Option.availableOptions track by option.id"
-            ng-model="Option.selectedOption" class="selectpicker form-control" data-style="btn-info">
+                ng-model="Option.selectedOption" class="selectpicker form-control" data-style="btn-info">
         </select>
     </div> <br>
     <div>
         <h4><label class="label label-info">Country</label></h4>
         <select name="mySelect" id="mySelect"
                 ng-options="option.name for option in Country.availableOptions track by option.id"
-            ng-model="Country.selectedOption" class="selectpicker form-control" data-style="btn-info">
+                ng-model="Country.selectedOption" class="selectpicker form-control" data-style="btn-info">
         </select>
     </div> <br>
     <div class="text-center">
@@ -27,8 +27,8 @@
     </div>
     <div class="animate-switch-container"
          ng-switch on="Option.selectedOption.value">
-        <div class="animate-switch" ng-switch-default ><a href="oneFirm.html">click here</a></div>
-        <div class="animate-switch container" ng-switch-when="vat">
+        <div class="animate-switch" ng-switch-default></div>
+        <div class="animate-switch container" ng-switch-when="vat" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
                     <li>Vat: {{info.vat}}</li>
@@ -50,16 +50,18 @@
                     <li>E-Mail: {{info.email}}</li>
                 </ul>
             </div>
-            <h3>Departments</h3>
-            <div class="container border col-md-8 center-block">
+            <div class="container border col-md-12">
+                <h3 class="text-center"><strong>Departments</strong></h3>
+            </div>
+            <div class="container border" >
                 <table class="table table-bordered table-hover">
-                    <tr ng-repeat="proUnit in info.productionunits">
+                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
                         <td ng-bind="proUnit.name" style='text-align: center'></td>
                     </tr>
                 </table>
             </div>
         </div>
-        <div class="animate-switch" ng-switch-when="name">
+        <div class="animate-switch" ng-switch-when="name" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
                     <li>Vat: {{info.vat}}</li>
@@ -76,19 +78,24 @@
             </div>
             <div class="container border col-md-4">
                 <ul>
-                    <li>Owner Name: {{info.owners[0].name}}</li>
+                    <li>Owner Name: {{info.owners.name}}</li>
                     <li>Phone: {{info.phone}}</li>
                     <li>E-Mail: {{info.email}}</li>
                 </ul>
             </div>
-            <div class="container border col-md-4">
-                <ul>
-                    <li ng-repeat="proUnit in info.productionunits">{{proUnit.name}}</li>
-                </ul>
+            <div class="container border col-md-12">
+                <h3 class="text-center"><strong>Departments</strong></h3>
+            </div>
+            <div class="container border" >
+                <table class="table table-bordered table-hover">
+                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <td ng-bind="proUnit.name" style='text-align: center'></td>
+                    </tr>
+                </table>
             </div>
         </div>
 
-        <div class="animate-switch" ng-switch-when="produ">
+        <div class="animate-switch" ng-switch-when="produ" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
                     <li>Vat: {{info.vat}}</li>
@@ -105,12 +112,23 @@
             </div>
             <div class="container border col-md-4">
                 <ul>
-                    <li>Owner Name: {{info.owners[0].name}}</li>
+                    <li>Owner Name: {{info.owners.name}}</li>
                     <li>Phone: {{info.phone}}</li>
                     <li>E-Mail: {{info.email}}</li>
                 </ul>
-            </div></div>
-        <div class="animate-switch" ng-switch-when="phone" vat-phone>
+            </div>
+            <div class="container border col-md-12">
+                <h3 class="text-center"><strong>Departments</strong></h3>
+            </div>
+            <div class="container border" >
+                <table class="table table-bordered table-hover">
+                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <td ng-bind="proUnit.name" style='text-align: center'></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="phone" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
                     <li>Vat: {{info.vat}}</li>
@@ -127,15 +145,21 @@
             </div>
             <div class="container border col-md-4">
                 <ul>
-                    <li>Owner Name: {{info.owners[0].name}}</li>
+                    <li>Owner Name: {{info.owners.name}}</li>
                     <li>Phone: {{info.phone}}</li>
                     <li>E-Mail: {{info.email}}</li>
                 </ul>
+            </div>
+            <div class="container border col-md-12">
+                <h3 class="text-center"><strong>Departments</strong></h3>
+            </div>
+            <div class="container border" >
+                <table class="table table-bordered table-hover">
+                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <td ng-bind="proUnit.name" style='text-align: center'></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-    <!--    <div>
-            <p ng-bind="name"></p>
-            <p ng-bind="vat"></p>
-        </div>-->
 </div>
