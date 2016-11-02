@@ -8,27 +8,134 @@
     </div> <br>
     <div>
         <h4><label class="label label-info">Option</label></h4>
-        <select ng-model="Option" class="selectpicker form-control" data-style="btn-info">
-            <option value="vat">VAT Number</option>
-            <option value="name">Firm Name</option>
-            <option value="produ">Production Unit</option>
-            <option value="phone">Phone Number</option>
+        <select name="mySelect" id="mySelect"
+                ng-options="option.name for option in Option.availableOptions track by option.id"
+            ng-model="Option.selectedOption" class="selectpicker form-control" data-style="btn-info">
         </select>
     </div> <br>
     <div>
         <h4><label class="label label-info">Country</label></h4>
-        <select ng-model="Country" class="selectpicker form-control" data-style="btn-info">
-            <option value="dk">DK</option>
-            <option value="no">NO</option>
-        </select> 
+        <select name="mySelect" id="mySelect"
+                ng-options="option.name for option in Country.availableOptions track by option.id"
+            ng-model="Country.selectedOption" class="selectpicker form-control" data-style="btn-info">
+        </select>
     </div> <br>
     <div class="text-center">
         <form ng-submit="getInfo()">
-        <input type="submit" value="Find Company" class="btn btn-info btn-lg"/>
+            <input type="submit" value="Find Company" class="btn btn-info btn-lg"/>
         </form>
     </div>
-    <div>
-        <p ng-bind="name"></p>
-        <p ng-model="vat"></p>
+    <div class="animate-switch-container"
+         ng-switch on="Option.selectedOption.value">
+        <div class="animate-switch" ng-switch-default ><a href="oneFirm.html">click here</a></div>
+        <div class="animate-switch container" ng-switch-when="vat">
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Vat: {{info.vat}}</li>
+                    <li>Name: {{info.name}}</li>
+                    <li>Description: {{info.industrydesc}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Address: {{info.address}}</li>
+                    <li>City: {{info.city}}</li>
+                    <li>Zipcode: {{info.zipcode}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Owner Name: {{info.owners.name}}</li>
+                    <li>Phone: {{info.phone}}</li>
+                    <li>E-Mail: {{info.email}}</li>
+                </ul>
+            </div>
+            <h3>Departments</h3>
+            <div class="container border col-md-8 center-block">
+                <table class="table table-bordered table-hover">
+                    <tr ng-repeat="proUnit in info.productionunits">
+                        <td ng-bind="proUnit.name" style='text-align: center'></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="name">
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Vat: {{info.vat}}</li>
+                    <li>Name: {{info.name}}</li>
+                    <li>Description: {{info.industrydesc}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Address: {{info.address}}</li>
+                    <li>City: {{info.city}}</li>
+                    <li>Zipcode: {{info.zipcode}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Owner Name: {{info.owners[0].name}}</li>
+                    <li>Phone: {{info.phone}}</li>
+                    <li>E-Mail: {{info.email}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li ng-repeat="proUnit in info.productionunits">{{proUnit.name}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="animate-switch" ng-switch-when="produ">
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Vat: {{info.vat}}</li>
+                    <li>Name: {{info.name}}</li>
+                    <li>Description: {{info.industrydesc}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Address: {{info.address}}</li>
+                    <li>City: {{info.city}}</li>
+                    <li>Zipcode: {{info.zipcode}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Owner Name: {{info.owners[0].name}}</li>
+                    <li>Phone: {{info.phone}}</li>
+                    <li>E-Mail: {{info.email}}</li>
+                </ul>
+            </div></div>
+        <div class="animate-switch" ng-switch-when="phone" vat-phone>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Vat: {{info.vat}}</li>
+                    <li>Name: {{info.name}}</li>
+                    <li>Description: {{info.industrydesc}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Address: {{info.address}}</li>
+                    <li>City: {{info.city}}</li>
+                    <li>Zipcode: {{info.zipcode}}</li>
+                </ul>
+            </div>
+            <div class="container border col-md-4">
+                <ul>
+                    <li>Owner Name: {{info.owners[0].name}}</li>
+                    <li>Phone: {{info.phone}}</li>
+                    <li>E-Mail: {{info.email}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
+    <!--    <div>
+            <p ng-bind="name"></p>
+            <p ng-bind="vat"></p>
+        </div>-->
 </div>
