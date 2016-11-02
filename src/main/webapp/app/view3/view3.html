@@ -23,6 +23,12 @@
         </select> 
     </div> <br>
     <div class="text-center">
-        <input ng-submit="getInfo()" type="submit" value="Find Company" class="btn btn-info btn-lg"/>
+        <form ng-submit="getInfo()">
+        <input type="submit" value="Find Company" class="btn btn-info btn-lg"/>
+        </form>
+    </div>
+    <div>
+        <p ng-bind="name"></p>
+        <p ng-model="vat"></p>
     </div>
 </div>
