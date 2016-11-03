@@ -12,14 +12,29 @@ angular.module('myApp.view5', ['ngRoute'])
         .controller('adminController', ['$scope', '$http', function ($scope, $http) {
                 $scope.allUsers;
                 $scope.error;
-                $http({
-                    method: 'GET',
-                    url: 'api/admin/users'
-                })
-                        .success(function (response) {
-                            $scope.allUsers = response;
-                        }, function (error) {
-                            $scope.error = error;
-                        });
+                $scope.getAllUsers = function () {
+                    $http({
+                        method: 'GET',
+                        url: 'api/admin/users'
+                    })
+                            .success(function (response) {
+                                $scope.allUsers = response;
+                            }, function (error) {
+                                $scope.error = error;
+                            });
+                }
+                $scope.deleteUser = function (username) {
+                    $http({
+                        method: 'DELETE',
+                        url: 'api/admin/user/' + username
+                    })
+                            .success(function (response) {
+                                $scope.getAllUsers();
+                            }, function (error) {
+                                $scope.error = error;
+                            });
+                }
+                
+                $scope.getAllUsers();
 
             }])

@@ -67,8 +67,26 @@ public class UserFacade implements IUserFacade {
     @Override
     public List<User> getAllUsers() {
         EntityManager em = getEntityManager();
-        TypedQuery<User> query = em.createQuery("SELECT u FROM SEED_USER u", User.class);
-        return query.getResultList();
+        try{
+            TypedQuery<User> query = em.createQuery("SELECT u FROM SEED_USER u", User.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public User deleteUser(String id) {
+        EntityManager em = getEntityManager();
+        try{
+            User user = em.find(User.class, id);
+            em.getTransaction().begin();
+            em.remove(user);
+            em.getTransaction().commit();
+            return user;
+        } finally {
+            em.close();
+        }
     }
 
 }

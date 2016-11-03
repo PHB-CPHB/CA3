@@ -23,5 +23,7 @@ public interface IUserFacade {
     
     void addUser(String username, String password);
     List<User> getAllUsers();
+
+    public Object deleteUser(String id);
     
 }
