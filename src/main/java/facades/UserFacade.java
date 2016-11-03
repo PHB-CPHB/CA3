@@ -1,5 +1,6 @@
 package facades;
 
+import entity.ExchangeRates;
 import entity.Role;
 import security.IUserFacade;
 import entity.User;
@@ -57,6 +58,20 @@ public class UserFacade implements IUserFacade {
             em.persist(newUser);
             em.getTransaction().commit();
         } catch (PasswordStorage.CannotPerformOperationException ex) {
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void addExchangeRates(ExchangeRates exRate) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(exRate);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
             Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             em.close();

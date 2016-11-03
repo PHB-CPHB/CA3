@@ -5,7 +5,7 @@
  */
 package security;
 
-import entity.User;
+import entity.ExchangeRates;
 import java.util.List;
 
 /**
@@ -22,5 +22,7 @@ public interface IUserFacade {
     IUser getUserByUserId(String id);
     
     void addUser(String username, String password);
+    
+    void addExchangeRates(ExchangeRates exRate);
     
 }
