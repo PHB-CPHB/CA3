@@ -2,4 +2,18 @@
 <div>
   <p>Data from server (Admin Only) <b style="color: darkblue">Hello</b></p>
   <p>Server Time: <b style="color: darkblue">Hi!</b></p>
+  <table class="table">
+      <tr>
+        <th>Username</th>
+        <th>Roles</th>
+      </tr>
+      <tr ng-repeat="user in allUsers">
+          <td>{{user.userName}}</td>
+          <td>
+              <p ng-repeat="role in user.roles">
+                  {{role.roleName}}<br>
+              </p>
+          </td>
+      </tr>
+  </table>
 </div>

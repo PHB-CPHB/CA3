@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.PostLoad;
 import security.IUser;
 import security.PasswordStorage;
 
@@ -72,5 +73,6 @@ public class User implements IUser, Serializable{
   public String getUserName() {
     return userName;
   }
+  
      
 }

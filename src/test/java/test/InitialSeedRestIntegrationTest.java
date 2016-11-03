@@ -112,5 +112,16 @@ public class InitialSeedRestIntegrationTest {
             .body("error.message", equalTo("No authorization header provided"));
 
   }
+  
+//  @Test
+//  public void tesRestAllUsers() {
+//    login("admin","test");
+//    given()
+//            .contentType("application/json")
+//            .header("Authorization", "Bearer " + securityToken)
+//            .when()
+//            .get("/api/admin/users").then()
+//            .statusCode(200);
+//  }
 
 }

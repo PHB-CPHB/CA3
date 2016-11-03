@@ -1,22 +1,30 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package rest;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.google.gson.Gson;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import security.IUserFacade;
+import security.UserFacadeFactory;
 
-@Path("demoadmin")
+@Path("/admin")
 @RolesAllowed("Admin")
 public class Admin {
-  
-  @GET
-  @Produces(MediaType.APPLICATION_JSON)
-  public String getSomething(){
-    String now = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(new Date());
-    return "{\"message\" : \"REST call accesible by only authenticated ADMINS\",\n"+"\"serverTime\": \""+now +"\"}"; 
-  }
- 
+    IUserFacade facade = UserFacadeFactory.getInstance();
+    Gson gson = new Gson();
+    
+    @GET
+    @Path("/users")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsers(){
+        return Response.ok(gson.toJson(facade.getAllUsers())).build();
+    }
 }
