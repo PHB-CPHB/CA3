@@ -1,5 +1,6 @@
 package facades;
 
+import entity.ExchangeRates;
 import entity.Role;
 import security.IUserFacade;
 import entity.User;
@@ -52,8 +53,8 @@ public class UserFacade implements IUserFacade {
     public void addUser(String username, String password) {
         EntityManager em = getEntityManager();
         try {
-        User newUser = new User(username, password);
-        newUser.addRole(new Role("User"));
+            User newUser = new User(username, password);
+            newUser.addRole(new Role("User"));
             em.getTransaction().begin();
             em.persist(newUser);
             em.getTransaction().commit();
@@ -70,12 +71,26 @@ public class UserFacade implements IUserFacade {
         try{
             TypedQuery<User> query = em.createQuery("SELECT u FROM SEED_USER u", User.class);
             return query.getResultList();
+            } finally {
+            em.close();
+        }
+    }
+
+    public void addExchangeRates(ExchangeRates exRate) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(exRate);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             em.close();
         }
     }
 
     @Override
+
     public User deleteUser(String id) {
         EntityManager em = getEntityManager();
         try{
@@ -84,6 +99,15 @@ public class UserFacade implements IUserFacade {
             em.remove(user);
             em.getTransaction().commit();
             return user;
+            } finally {
+            em.close();
+        }
+    }
+
+    public ExchangeRates getExhangeRates(String id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(ExchangeRates.class, id);
         } finally {
             em.close();
         }
