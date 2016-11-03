@@ -44,7 +44,7 @@ public class Currency {
      */
     @Path("/dailyrates")
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getDailyRates() {
         Gson gson = new Gson();
         return gson.toJson(getRate.getRate());

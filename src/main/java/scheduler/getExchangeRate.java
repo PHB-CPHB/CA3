@@ -34,6 +34,11 @@ public class getExchangeRate extends DefaultHandler implements Runnable {
     private ExchangeRates newestRate;
 
     public ExchangeRates getRate() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String data = df.format(cal.getTime());
+        newestRate = facade.getExhangeRates(data);
         return newestRate;
     }
 
@@ -79,34 +84,21 @@ public class getExchangeRate extends DefaultHandler implements Runnable {
 
     }
 
-    public boolean getData() {
+    public void getData() {
         try {
             System.out.println("--------------------Starting-----------------------------------------");
             XMLReader xr = XMLReaderFactory.createXMLReader();
             xr.setContentHandler(new XmlReader());
             URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
             xr.parse(new InputSource(url.openStream()));
-            return true;
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
-        return false;
-    }
-
-    public void updateRate() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        String data = df.format(cal.getTime());
-        newestRate = facade.getExhangeRates(data);
     }
 
     @Override
     public void run() {
-
-        if (getData()) {
-            updateRate();
-        }
+        getData();
 
     }
 
