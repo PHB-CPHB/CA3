@@ -28,6 +28,7 @@
     <div class="animate-switch-container"
          ng-switch on="Option.selectedOption.value">
         <div class="animate-switch" ng-switch-default></div>
+        <!---------------------------------- DETTE ER VAT ------------------------------------------------------------>
         <div class="animate-switch container" ng-switch-when="vat" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
@@ -51,16 +52,60 @@
                 </ul>
             </div>
             <div class="container border col-md-12">
-                <h3 class="text-center"><strong>Departments</strong></h3>
+                <h3 style="text-align: center"><strong>Departments</strong></h3>
             </div>
-            <div class="container border" >
-                <table class="table table-bordered table-hover">
-                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
-                        <td ng-bind="proUnit.name" style='text-align: center'></td>
-                    </tr>
-                </table>
+            <div class="container border col-md-12" >
+                <ul style="list-style: none">
+                    <li ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <button ng-click="proUnit.name" data-toggle="modal" data-target="#{{proUnit.pno}}">{{proUnit.name}}</button>
+                        <div class="modal fade" id="{{proUnit.pno}}" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>{{proUnit.name}}</h2>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                City: {{proUnit.city}}
+                                            </li>
+                                            <li>
+                                                Address: {{proUnit.address}}
+                                            </li>
+                                            <li>
+                                                Zipcode: {{proUnit.zipcode}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                Description: {{proUnit.industrydesc}}
+                                            </li>
+                                            <li>
+                                                Phone: {{proUnit.phone}}
+                                            </li>
+                                            <li>
+                                                Start data: {{proUnit.startdate}}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <form>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input  type="submit" class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <li>
+                </ul>
             </div>
         </div>
+      <!---------------------------------- DETTE ER NAME ------------------------------------------------------------>
         <div class="animate-switch" ng-switch-when="name" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
@@ -84,17 +129,60 @@
                 </ul>
             </div>
             <div class="container border col-md-12">
-                <h3 class="text-center"><strong>Departments</strong></h3>
+                <h3 style="text-align: center"><strong>Departments</strong></h3>
             </div>
-            <div class="container border" >
-                <table class="table table-bordered table-hover">
-                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
-                        <td id="proUnit.name" ng-bind="proUnit.name" style='text-align: center'></td>
-                    </tr>
-                </table>
+            <div class="container border col-md-12" >
+                <ul style="list-style: none">
+                    <li ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <button data-toggle="modal" data-target="#{{proUnit.pno}}">{{proUnit.name}}</button>
+                        <div class="modal fade" id="{{proUnit.pno}}" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>{{proUnit.name}}</h2>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                City: {{proUnit.city}}
+                                            </li>
+                                            <li>
+                                                Address: {{proUnit.address}}
+                                            </li>
+                                            <li>
+                                                Zipcode: {{proUnit.zipcode}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                Description: {{proUnit.industrydesc}}
+                                            </li>
+                                            <li>
+                                                Phone: {{proUnit.phone}}
+                                            </li>
+                                            <li>
+                                                Start data: {{proUnit.startdate}}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <form>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input  type="submit" class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <li>
+                </ul>
             </div>
         </div>
-
+<!---------------------------------- DETTE ER PRODU ------------------------------------------------------------>
         <div class="animate-switch" ng-switch-when="produ" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
@@ -118,16 +206,60 @@
                 </ul>
             </div>
             <div class="container border col-md-12">
-                <h3 class="text-center"><strong>Departments</strong></h3>
+                <h3 style="text-align: center"><strong>Departments</strong></h3>
             </div>
-            <div class="container border" >
-                <table class="table table-bordered table-hover">
-                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
-                        <td ng-click="getSpecifikCompany(proUnit.name)" ng-bind="proUnit.name" style='text-align: center'></td>
-                    </tr>
-                </table>
+            <div class="container border col-md-12" >
+                <ul style="list-style: none">
+                    <li ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <button ng-click="proUnit.name" data-toggle="modal" data-target="#{{proUnit.pno}}">{{proUnit.name}}</button>
+                        <div class="modal fade" id="{{proUnit.pno}}" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>{{proUnit.name}}</h2>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                City: {{proUnit.city}}
+                                            </li>
+                                            <li>
+                                                Address: {{proUnit.address}}
+                                            </li>
+                                            <li>
+                                                Zipcode: {{proUnit.zipcode}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                Description: {{proUnit.industrydesc}}
+                                            </li>
+                                            <li>
+                                                Phone: {{proUnit.phone}}
+                                            </li>
+                                            <li>
+                                                Start data: {{proUnit.startdate}}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <form>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input  type="submit" class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <li>
+                </ul>
             </div>
         </div>
+<!---------------------------------- DETTE ER PHONE ------------------------------------------------------------>
         <div class="animate-switch" ng-switch-when="phone" ng-show="dataReady">
             <div class="container border col-md-4">
                 <ul>
@@ -151,15 +283,59 @@
                 </ul>
             </div>
             <div class="container border col-md-12">
-                <h3 class="text-center"><strong>Departments</strong></h3>
+                <h3 style="text-align: center"><strong>Departments</strong></h3>
             </div>
-            <div class="container border" >
-                <table class="table table-bordered table-hover">
-                    <tr ng-repeat="proUnit in info.productionunits" class='text-center'>
-                        <td ng-bind="proUnit.name" style='text-align: center'></td>
-                    </tr>
-                </table>
+            <div class="container border col-md-12" >
+                <ul style="list-style: none">
+                    <li ng-repeat="proUnit in info.productionunits" class='text-center'>
+                        <button ng-click="proUnit.name" data-toggle="modal" data-target="#{{proUnit.pno}}">{{proUnit.name}}</button>
+                        <div class="modal fade" id="{{proUnit.pno}}" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2>{{proUnit.name}}</h2>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                City: {{proUnit.city}}
+                                            </li>
+                                            <li>
+                                                Address: {{proUnit.address}}
+                                            </li>
+                                            <li>
+                                                Zipcode: {{proUnit.zipcode}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-body col-md-6">
+                                        <ul>
+                                            <li>
+                                                Description: {{proUnit.industrydesc}}
+                                            </li>
+                                            <li>
+                                                Phone: {{proUnit.phone}}
+                                            </li>
+                                            <li>
+                                                Start data: {{proUnit.startdate}}
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <form>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input  type="submit" class="btn btn-default">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <li>
+                </ul>
             </div>
         </div>
+
     </div>
 </div>
