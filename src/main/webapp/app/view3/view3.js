@@ -9,7 +9,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         });
     }]);
 
-app.controller('View3Ctrl', ['$http', '$scope', '$mdDialog', function ($http, $scope, $mdDialog) {
+app.controller('View3Ctrl', ['$http', '$scope', 'companyInfoFactory', function ($http, $scope, companyInfoFactory) {
         $scope.Country = {
             availableOptions: [
                 {id: '1', name: 'DK', value: 'dk'},
@@ -32,72 +32,19 @@ app.controller('View3Ctrl', ['$http', '$scope', '$mdDialog', function ($http, $s
         $scope.name;
         $scope.vat;
         $scope.info;
+
         $scope.getInfo = function () {
-            var first = $scope.searchText;
-            if ($scope.Option.selectedOption.value === "vat") {
-                first = $scope.searchText.substring(0, 4);
-                first += "%20" + $scope.searchText.substring(4);
-            }
-            $http.get('http://cvrapi.dk/api?' + $scope.Option.selectedOption.value + '=' + first + '&country=' + $scope.Country.selectedOption.value, {
-                headers: {
-                    'User-Agent': 'CVR API-CA3 CPH-Business Exercise-Phillip-cph-pb115@cphbusiness.dk'
-                },
-                skipAuthorization: true
-            })
-                    .success(function (data, status, headers, config) {
-                        if (data.error) {
-                            alert("Error: " + data.message);
-                        }
-                        $scope.dataReady = true;
-                        $scope.info = data;
-                        console.log(data);
-
-                    })
-                    .error(function (data, status, headers, config) {
-                        console.log("Error " + data);
-                    });
+            companyInfoFactory.getInfo($scope.searchText, $scope.Country, $scope.Option).then(function (response) {
+                $scope.dataReady = true;
+                $scope.info = response.data;
+            });
         };
-        $scope.getSpecifikCompany = function (id) {
-            for (var i = 0; i < $scope.info.productionunits.length(); i++) {
-                if ($scope.info.productionunits.name === id) {
-                        $mdDialog.show({
-                            controller: DialogController,
-                            templateUrl: 'dialog1.tmpl.html',
-                            parent: angular.element(document.body),
-                            targetEvent: ev,
-                            clickOutsideToClose: true,
-                            fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-                        })
-                                .then(function (answer) {
-                                    $scope.status = 'You said the information was "' + answer + '".';
-                                }, function () {
-                                    $scope.status = 'You cancelled the dialog.';
-                                });
-                } else {
-
-                }
-            }
-        };
-//    $scope.info;
-//    $scope.getInfo = function(){ 
-//        companyInfoFactory.getInfo($scope.searchText, $scope.Country, $scope.Option).then(function(data){
-//          $scope.info = data;  
-//        });
-//        
-//    };
     }]);
 
-app.directive('modalDirective', function () {
-    return {
-        templateUrl: 'modal.html'
-    };
-});
 
 app.factory('companyInfoFactory', ['$http', function ($http) {
         var getInfo = function (searchText, Country, Option) {
             var first = searchText;
-            console.log(Country.selectedOption.value);
-            console.log(Option.selectedOption.value);
             if (Option.selectedOption.value === "vat") {
                 first = searchText.substring(0, 4);
                 first += "%20" + searchText.substring(4);
@@ -113,25 +60,9 @@ app.factory('companyInfoFactory', ['$http', function ($http) {
                     .error(function (data, status, headers, config) {
                         return console.log("Error " + data);
                     });
-//                $http({
-//                    url: 'http://cvrapi.dk/api?' + $scope.Option + '=' + first + '&country=' + $scope.Country,
-//                    skipAuthorization: true,
-//                    method: 'GET',
-//                    succes: function (data) {
-//                        console.log("Succes " + data);
-//                    },
-//                    error: function (data) {
-//                        console.log("Error " + data);
-//                    }
-//                });
         };
         return {
             getInfo: getInfo
         };
     }]);
 
-app.directive("vat", function () {
-    return {
-        templateUrl: "directive/oneFirm.html"
-    };
-});
