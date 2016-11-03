@@ -11,8 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import static org.apache.xalan.lib.ExsltDatetime.date;
+import java.util.Calendar;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -29,10 +28,14 @@ import xml.XmlReader;
  */
 public class getExchangeRate extends DefaultHandler implements Runnable {
 
-    ExchangeRates newRates;
-    String temp = "";
-    IUserFacade facade = UserFacadeFactory.getInstance();
-    ExchangeRates newestRate;
+    private ExchangeRates newRates;
+    private String temp = "";
+    private IUserFacade facade = UserFacadeFactory.getInstance();
+    private ExchangeRates newestRate;
+
+    public ExchangeRates getRate() {
+        return newestRate;
+    }
 
     @Override
     public void startDocument() throws SAXException {
@@ -76,20 +79,33 @@ public class getExchangeRate extends DefaultHandler implements Runnable {
 
     }
 
-    @Override
-    public void run() {
-
+    public boolean getData() {
         try {
             System.out.println("--------------------Starting-----------------------------------------");
             XMLReader xr = XMLReaderFactory.createXMLReader();
             xr.setContentHandler(new XmlReader());
             URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
             xr.parse(new InputSource(url.openStream()));
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            String data = df.format(new Date());
-            newestRate = facade.getExhangeRates(data);
+            return true;
         } catch (SAXException | IOException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void updateRate() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String data = df.format(cal.getTime());
+        newestRate = facade.getExhangeRates(data);
+    }
+
+    @Override
+    public void run() {
+
+        if (getData()) {
+            updateRate();
         }
 
     }

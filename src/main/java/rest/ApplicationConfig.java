@@ -25,11 +25,12 @@ public class ApplicationConfig extends Application {
     resources.add(httpErrors.NotFoundExceptionMapper.class);
     resources.add(rest.Admin.class);
     resources.add(rest.All.class);
+    resources.add(rest.Currency.class);
     resources.add(rest.User.class);
     resources.add(security.JWTAuthenticationFilter.class);
     resources.add(security.Login.class);
     resources.add(security.NotAuthorizedExceptionMapper.class);
-    resources.add(security.RolesAllowedFilter.class);
+        resources.add(security.RolesAllowedFilter.class);
    
    
   }
