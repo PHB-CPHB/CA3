@@ -49,8 +49,13 @@ app.factory('companyInfoFactory', ['$http', function ($http) {
                 first = searchText.substring(0, 4);
                 first += "%20" + searchText.substring(4);
             }
-            return $http.get('http://cvrapi.dk/api?' + Option.selectedOption.value + '=' + first + '&country=' + Country.selectedOption.value)
+            return $http({
+                url: 'http://cvrapi.dk/api?' + Option.selectedOption.value + '=' + first + '&country=' + Country.selectedOption.value,
+                skipAuthorization: true,
+                method: 'GET'
+            })
                     .success(function (data, status, headers, config) {
+                        console.log(data);
                         if (data.error) {
                             alert("Error: " + data.message);
                         }
