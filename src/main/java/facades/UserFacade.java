@@ -52,8 +52,8 @@ public class UserFacade implements IUserFacade {
     public void addUser(String username, String password) {
         EntityManager em = getEntityManager();
         try {
-        User newUser = new User(username, password);
-        newUser.addRole(new Role("User"));
+            User newUser = new User(username, password);
+            newUser.addRole(new Role("User"));
             em.getTransaction().begin();
             em.persist(newUser);
             em.getTransaction().commit();
@@ -73,6 +73,16 @@ public class UserFacade implements IUserFacade {
             em.getTransaction().commit();
         } catch (Exception ex) {
             Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public ExchangeRates getExhangeRates(String id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(ExchangeRates.class, id);
         } finally {
             em.close();
         }

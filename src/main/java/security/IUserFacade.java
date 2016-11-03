@@ -25,4 +25,6 @@ public interface IUserFacade {
     
     void addExchangeRates(ExchangeRates exRate);
     
+    ExchangeRates getExhangeRates(String id);
+    
 }

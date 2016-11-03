@@ -17,6 +17,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Currency implements Serializable {
 
+    @ManyToOne
+    private ExchangeRates exchangeRates;
 
     @Id
     private String code;

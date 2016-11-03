@@ -5,65 +5,93 @@
  */
 package scheduler;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import entity.Currency;
+import entity.ExchangeRates;
+import java.io.IOException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import static org.apache.xalan.lib.ExsltDatetime.date;
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+import security.IUserFacade;
+import security.UserFacadeFactory;
+import xml.XmlReader;
 
 /**
  *
  * @author kaspe
  */
-public class getExchangeRate implements Runnable{
-    
-    private final String USER_AGENT = "Mozilla/5.0";
+public class getExchangeRate extends DefaultHandler implements Runnable {
 
-	public static void main(String[] args) throws Exception {
+    ExchangeRates newRates;
+    String temp = "";
+    IUserFacade facade = UserFacadeFactory.getInstance();
+    ExchangeRates newestRate;
 
-		getExchangeRate http = new getExchangeRate();
+    @Override
+    public void startDocument() throws SAXException {
+        System.out.println("Start Document (Sax-event)");
+        newRates = new ExchangeRates();
+    }
 
-		System.out.println("Testing 1 - Send Http GET request");
-		http.sendGet();
+    @Override
+    public void endDocument() throws SAXException {
+        System.out.println("End Document (Sax-event)");
+        facade.addExchangeRates(newRates);
+    }
 
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        Currency currency = new Currency();
 
-	}
+        if (localName.equalsIgnoreCase("dailyrates")) {
+            for (int i = 0; i < attributes.getLength(); i++) {
+                newRates.setDailyRates(attributes.getValue(i));
+            }
+        }
+        if (localName.equalsIgnoreCase("currency")) {
+            for (int i = 0; i < attributes.getLength(); i++) {
+                if (attributes.getLocalName(i).equalsIgnoreCase("code")) {
+                    currency.setCode(attributes.getValue(i));
+                }
+                if (attributes.getLocalName(i).equalsIgnoreCase("desc")) {
+                    currency.setDesc(attributes.getValue(i));
+                }
+                if (attributes.getLocalName(i).equalsIgnoreCase("rate")) {
+                    currency.setRate(attributes.getValue(i));
+                }
+            }
+        }
+        if (currency.getCode() != null && currency.getDesc() != null && currency.getRate() != null) {
+            newRates.addCurrency(currency);
+            temp = newRates.getCurrency().get(newRates.getCurrency().size() - 1).getCode();
+        }
+        System.out.println("");
 
-	// HTTP GET request
-	private void sendGet() throws Exception {
-
-		String url = "http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en";
-
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		//print result
-		System.out.println(response);
-
-	}
+    }
 
     @Override
     public void run() {
-        
+
+        try {
+            System.out.println("--------------------Starting-----------------------------------------");
+            XMLReader xr = XMLReaderFactory.createXMLReader();
+            xr.setContentHandler(new XmlReader());
+            URL url = new URL("http://www.nationalbanken.dk/_vti_bin/DN/DataService.svc/CurrencyRatesXML?lang=en");
+            xr.parse(new InputSource(url.openStream()));
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String data = df.format(new Date());
+            newestRate = facade.getExhangeRates(data);
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
-    
+
 }
