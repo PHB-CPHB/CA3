@@ -7,7 +7,7 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>seedMaven</name>
+  <name>CA3</name>
 
   <properties>
     <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -122,6 +122,7 @@
   </dependencies>
 
   <build>
+      <finalName>ca3</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
