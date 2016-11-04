@@ -1,5 +1,6 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class User implements IUser, Serializable{
   }
     
   @Override
+  @JsonIgnore
   public List<String> getRolesAsStrings() {
    if (roles.isEmpty()) {
             return null;
