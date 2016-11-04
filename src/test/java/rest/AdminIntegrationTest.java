@@ -23,6 +23,21 @@ public class AdminIntegrationTest {
     
     public AdminIntegrationTest() {
     }
+    private static String securityToken;
+    
+    private static void login(String role, String password) {
+    String json = String.format("{username: \"%s\", password: \"%s\"}",role,password);
+    System.out.println(json);
+    securityToken = given()
+            .contentType("application/json")
+            .body(json)
+            .when().post("/api/login")
+            .then()
+            .extract().path("token");
+    System.out.println("Token: " + securityToken);
+
+  }
+    
     @BeforeClass
     public static void setUpBeforeAll() {
         RestAssured.baseURI = "http://localhost";
@@ -36,10 +51,16 @@ public class AdminIntegrationTest {
      */
     @Test
     public void testGetAllUsers() {
-        given().
-        when().get("/api/admin/users").
-        then().statusCode(200).
-        body("passwordHash[0]", equalTo("sha1:64000:18:WtnyHd6Sdz9Yl2W7T8PevKri5eFwFLlB:F+mIxZmuqyjgshbgpOJcS8Fc"), "userName[0]", equalTo("admin"), "roles[0].roleName[0]", equalTo("Admin"));
+        login("admin","test");
+        given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + securityToken)
+        .when()
+        .get("/api/admin/users")
+        .then()
+        .statusCode(200)
+        .body("userName[0]", equalTo("admin"),
+              "roles[0].roleName[0]", equalTo("Admin"));
     }
 
 //    /**
