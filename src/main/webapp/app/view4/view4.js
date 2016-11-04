@@ -12,7 +12,7 @@ angular.module('myApp.view4', ['ngRoute'])
 
                 $scope.data = {};
                 $scope.getData = function () {
-                    $http.get('http://localhost:8084/seedMaven/api/currency/dailyrates')
+                    $http.get('api/currency/dailyrates')
                             .success(function (data, status, headers, config) {
                                 console.log(data);
                                 $scope.data = data;
@@ -22,4 +22,22 @@ angular.module('myApp.view4', ['ngRoute'])
                             });
                 };
                 $scope.getData();
+                $scope.calculatedCurrency;
+                $scope.amount;
+                $scope.fromCurrency;
+                $scope.toCurrency;
+                $scope.calc = function () {
+                    console.log($scope.amount);
+                    console.log($scope.fromCurrency.code);
+                    console.log($scope.toCurrency);
+                    $http.get('api/currency/calculator/' + $scope.amount + '/' + $scope.fromCurrency.code + '/' + $scope.toCurrency.code)
+                            .success(function (data, status, headers, config) {
+                                console.log(data);
+
+                                $scope.calculatedCurrency = data;
+                            })
+                            .error(function (data, status, headers, config) {
+                                console.log("Error " + data);
+                            });
+                }
             }])

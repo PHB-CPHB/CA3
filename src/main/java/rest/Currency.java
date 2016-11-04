@@ -5,8 +5,8 @@
  */
 package rest;
 
+import calculator.Calc;
 import com.google.gson.Gson;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -14,8 +14,11 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import scheduler.getExchangeRate;
+import security.IUserFacade;
+import security.UserFacadeFactory;
 
 /**
  * REST Web Service
@@ -25,8 +28,10 @@ import scheduler.getExchangeRate;
 @Path("currency")
 
 public class Currency {
-    
+
     getExchangeRate getRate = new getExchangeRate();
+    Calc calculator = new Calc();
+    IUserFacade facade = new UserFacadeFactory().getInstance();
 
     @Context
     private UriInfo context;
@@ -48,6 +53,15 @@ public class Currency {
     public String getDailyRates() {
         Gson gson = new Gson();
         return gson.toJson(getRate.getRate());
+    }
+
+    @Path("/calculator/{amount}/{fromCurrency}/{toCurrency}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String exchangeCalc(@PathParam("amount") String amount, @PathParam("fromCurrency") String fCurrency, @PathParam("toCurrency") String tCurrency) {
+        Gson gson = new Gson();
+        String calculatedCurrency = calculator.calcRate(facade.getRateByCode(fCurrency), facade.getRateByCode(tCurrency), amount);
+        return gson.toJson(calculatedCurrency);
     }
 
     /**

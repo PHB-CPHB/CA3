@@ -27,4 +27,6 @@ public interface IUserFacade {
     
     ExchangeRates getExhangeRates(String id);
     
+    String getRateByCode(String code);
+    
 }
