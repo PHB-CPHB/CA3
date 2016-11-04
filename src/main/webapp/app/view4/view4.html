@@ -10,7 +10,7 @@
 
 <div class="container-fluid" style="text-align: center">
     <form ng-submit="calc()">
-        <input type="text" class="col-sm-8" style="border: 2px solid black; float:center;" ng-model="amount">
+        <input type="text" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2" style="border: 2px solid black; float:center;" ng-model="amount">
         <div>
             <div class="col-sm-6">
                 <select class="form-control" ng-options="currency.description for currency in data.currency"
@@ -28,4 +28,6 @@
         </div>
     </form>
 </div>
-<p>{{calculatedCurrency}}</p>
+<div class="container" style="text-align: center">
+<h3><strong>{{calculatedCurrency}}</strong></h3>    
+</div>

@@ -8,12 +8,9 @@ package rest;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.parsing.Parser;
-import javax.ws.rs.core.Response;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.BeforeClass;
-import security.PasswordStorage;
 
 /**
  *

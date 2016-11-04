@@ -7,6 +7,7 @@ package rest;
 
 import calculator.Calc;
 import com.google.gson.Gson;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -26,7 +27,7 @@ import security.UserFacadeFactory;
  * @author kaspe
  */
 @Path("currency")
-
+@RolesAllowed("User")
 public class Currency {
 
     getExchangeRate getRate = new getExchangeRate();
@@ -60,8 +61,8 @@ public class Currency {
     @Produces(MediaType.APPLICATION_JSON)
     public String exchangeCalc(@PathParam("amount") String amount, @PathParam("fromCurrency") String fCurrency, @PathParam("toCurrency") String tCurrency) {
         Gson gson = new Gson();
-        String calculatedCurrency = calculator.calcRate(facade.getRateByCode(fCurrency), facade.getRateByCode(tCurrency), amount);
-        return gson.toJson(calculatedCurrency);
+        calculator.calcRate(facade.getRateByCode(fCurrency), facade.getRateByCode(tCurrency), amount);
+        return gson.toJson(calculator);
     }
 
     /**

@@ -38,7 +38,23 @@ public class CurrencyIntegrationTest {
         given().
         when().get("/api/currency/dailyrates").
         then().statusCode(200).
-        body("dailyRates", equalTo("2016-11-03"), "currency[0].code", equalTo("AUD"));
+        body("dailyRates", equalTo("2016-11-03"), "currency[0].code", equalTo("SGD"));
+    }
+    
+    /**
+     * Test of getexchangeCalc method, of class Currency.
+     */
+    @Test
+    public void testexchangeCalc() {
+        given()
+        .pathParam("amount", "100")
+        .pathParam("fromCurrency", "USD")
+        .pathParam("toCurrency", "NOK")        
+        .when()
+        .get("/api/currency/calculator/{amount}/{fromCurrency}/{toCurrency}")
+        .then()
+        .statusCode(200)
+        .body("value", equalTo("818.63666"));
     }
     
 }

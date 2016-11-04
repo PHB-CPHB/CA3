@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Documentation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <h1>
+           Documentation. 
+        </h1>
+        <div>
+            <ul>
+                <li>
+                    <h3>General description</h3>
+                    <p>
+                        When we first started this CA we felt we didnt have the nessary time to complete this task.<br>
+                        But when we started working on the CA it became more manageable.<br>
+                        We ran in to alot of problems with the test and especially the rest assured test.<br>
+                        this was because of the poorly descirbed errors messages by maven when run thorugh netbeans.<br>
+                        But all in all we have great fun and learnt alot about Rest, javascrip and Ajax.
+                    </p>
+                </li>
+                <li>
+                    <h3>How we made the project</h3>
+                    <p>
+                        We startede by making the backend.<br>
+                        we chose to make the entities and thier relations from java. <br>
+                        <img src="Images/Entity-CA2.png" alt="Entity"/>
+                        <br>
+                        Here you can see how our relations.
+                        <br>
+                        <img src="Images/Facade-CA2.png" alt="Facade"/>
+                        <br>
+                        Here you can see our facades
+                        <br>
+                        We made facades to InfonEntity, Phone and address. Then we made a main facade when we call the 3 other mapper facades.
+                        When our Rest calls a metode in the main facade, the main facade then calls one of the 3 mapper facades. The mapper facade then get or makes the chance in the database and returns either a Person or a Company.
+                    </p>
+                </li>
+                <li>
+                    <h3>Rest Api</h3>
+                    <p>
+                        We made two REST APIs around what we think are the two most important entity classes.<br>
+                        Those are the Person and Company entity classes, which inherit from InfoEntity,<br>
+                                from where we have dependencies to many of the other entities, such as Phone and Address.<br>
+                                The REST APIS call our facade layers, which then use JPA to make changes to our database.<br>
+                                In our REST APIs we use the standard GET, POST, PUT and DELETE methods to make our methods.<br>
+                                We have get all Persons/Companies, get Person/Company by id/cvr, get Person by Zip, create Person/Company,<br>
+                                edit Person/Company, Delete Person/Company.
+                    </p>
+                </li>
+                <li>
+                    <h3>Error responses</h3>
+                    <p>
+                        SÆT IND HER!
+                    </p>
+                </li>
+                <li>
+                    <h3>Json</h3>
+                    <p>
+                        At first we made a class called JSONConverter, where we made three methods.<br>
+                                The first one was getJSONFromObject, where we put a object as a parameter<br>
+                                and we use the GSON converter to make a string in the JSON format.<br>
+                                The second one is also called getJSONFromObject where we put a List of objects,<br>
+                                where the GSON converter does the same thing, <br>
+                                only this time it is a array of objects instead of a single object.<br>
+                                The last one is called getObjectFromJson, where we reverse the process<br>
+                                and use a String that is in JSON format to make an Object.<br>
+                                
+                                Later we found out that we didn't need the JSONConverter,<br>
+                                since the response object does the same thing when it is sent as a response.<br>
+                                So we have methods in our REST API that use both methods.
+                    </p>
+                </li>
+                <li>
+                    <h3>JUnit test and Rest Assured test</h3>
+                    <ul>
+                        <li>
+                            <h4>JUnit test</h4>
+                            <p>
+                                We have testet on parts of the system with JUnit.
+                                <br>
+                                We have testet to create a Person, with Phone number, Hobby and Address and Create Company with address. In Before Class.
+                                <br>
+                                We have choosen to test the following methodes.
+                                <br>
+                            </p>
+                            <ul>
+                                <li>
+                                    getPerson
+                                    <p>
+                                        Here we test if we can get a specific person by his id.
+                                    </p>
+                                </li>
+                                <li>
+                                    getPersonsByZip
+                                    <p>
+                                        Here we test if we can get all the persons form a specific zip
+                                    </p>
+                                </li>
+                                <li>
+                                    getPersonsByHobby
+                                    <p>
+                                        Here we test if we can get a person by a specific hobby
+                                    </p>
+                                </li>
+                                <li>
+                                    getCompanies
+                                    <p>
+                                        Here we test if we can get a specific company by its CVR-Number
+                                    </p>
+                                </li>
+                                <li>
+                                    addHobbyToPerson
+                                    <p>
+                                        Here we test if we can add a new hobby to a person
+                                    </p>
+                                </li>
+                            </ul>
+                            <p>
+                                The main purpose of these test was to see if our main facade did the right thing in the database.<br>
+                                So when we called a methode, we got the correct answer in the right object.<br>
+                                This made it alot eaiser to use it later on in the program.<br>
+                                We have also see that in some way it could be useful to make the test first.
+                            </p>
+                        </li>
+                        <li>
+                            <h4>Rest Assured test</h4>
+                            <ul>
+                                <li>
+                                    Hvis det skal være i punkt form ligesom JUnit.
+                                </li>
+                            </ul>
+                            <p>
+                                Hvis det bare skal vær tekst.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>Good and Bad things</h3>
+                    <p><strong>Good</strong></p>
+                    <ul>
+                        <li>
+                            We really enjoyed this module and how much new stuff we have learned.
+                        </li>
+                        <li>
+                            The good things about this CA was that we have used all we have learned from this moduel combind.<br>
+                            We have used it in a way that shows us how easy it is to make a server side that only runs on html protocol.
+                        </li>
+                        <li>
+                            We have made a program where the clint side does more of the work thanks to javascript and ajax.
+                        </li>
+                    </ul>
+                    <p><Strong>Bad</Strong></p>
+                    <ul>
+                        <li>
+                            Some of things we felt hardest was to connect to the rest. Becuase of the poor described errors.
+                        </li>
+                        <li>
+                            When we used maven through Netbeans we also got poor described errors.<br>
+                            As fatal error.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3>Contributers</h3>
+                    <p>Here you can see a more specific who made what. But in general we helped each other.</p>
+                    <ul>
+                        <li>
+                            <h4>Mikkel Ziemmer</h4>
+                            <p>Made the facade, overlooked error handling, stood for uploading the server to Digital Oacen.</p>
+                        </li>
+                        <li>
+                            <h4>Ørvur Guttesen</h4>
+                            <p>Made some of the entities, Rest for company, Error handling and Documentation.</p>
+                        </li>
+                        <li>
+                            <h4>Kasper Vetter</h4>
+                            <p>Made Rest for Person, Rest assured test and the frontend site.</p>
+                        </li>
+                        <li>
+                            <h4>Phillip Brink</h4>
+                            <p>Made some of the entities, Junit test and Documentation.</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

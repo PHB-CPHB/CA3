@@ -34,10 +34,10 @@ angular.module('myApp.view4', ['ngRoute'])
                             .success(function (data, status, headers, config) {
                                 console.log(data);
 
-                                $scope.calculatedCurrency = data;
+                                $scope.calculatedCurrency = data.value;
                             })
                             .error(function (data, status, headers, config) {
                                 console.log("Error " + data);
                             });
-                }
-            }])
+                };
+            }]);

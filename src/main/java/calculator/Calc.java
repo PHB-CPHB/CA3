@@ -10,13 +10,15 @@ package calculator;
  * @author kaspe
  */
 public class Calc {
+    
+    private String value;
 
     public Calc() {
 
     }
 
-    public String calcRate(String fromCurrency, String toCurreny, String amount) {
-        return String.valueOf(((Float.valueOf(fromCurrency) * Float.valueOf(amount)) / 100) / (Float.valueOf(toCurreny) / 100));
+    public void calcRate(String fromCurrency, String toCurreny, String amount) {
+        value = String.valueOf(((Float.valueOf(fromCurrency) * Float.valueOf(amount)) / 100) / (Float.valueOf(toCurreny) / 100));
     }
 
 }
