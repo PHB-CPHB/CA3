@@ -7,3 +7,25 @@
         <td>{{currency.rate}}</td>
     </tr>
 </table>
+
+<div class="container-fluid" style="text-align: center">
+    <form ng-submit="calc()">
+        <input type="text" class="col-sm-8" style="border: 2px solid black; float:center;" ng-model="amount">
+        <div>
+            <div class="col-sm-6">
+                <select class="form-control" ng-options="currency.description for currency in data.currency"
+                        ng-model="fromCurrency">
+                </select>
+            </div>
+            <div class="col-sm-6">
+                <select class="form-control" ng-options="currency.description for currency in data.currency"
+                        ng-model="toCurrency">
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-12" style="text-align: center">
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+</div>
+<p>{{calculatedCurrency}}</p>

@@ -1,9 +1,13 @@
 package facades;
 
+import entity.Currency;
 import entity.ExchangeRates;
 import entity.Role;
 import security.IUserFacade;
 import entity.User;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -111,6 +115,26 @@ public class UserFacade implements IUserFacade {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public String getRateByCode(String code) {
+        EntityManager em = getEntityManager();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String date = df.format(cal.getTime());
+        try {
+            ExchangeRates rates = em.find(ExchangeRates.class, date);
+            for (Currency currency : rates.getCurrency()) {
+                if (currency.getCode().equalsIgnoreCase(code)) {
+                    return currency.getRate();
+                }
+            }
+        } finally {
+            em.close();
+        }
+        return null;
     }
 
 }
