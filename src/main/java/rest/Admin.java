@@ -5,8 +5,7 @@
  */
 package rest;
 
-import com.google.gson.Gson;
-import entity.Role;
+
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,26 +16,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import security.IUserFacade;
 import security.UserFacadeFactory;
-import entity.User;
-import security.PasswordStorage;
 
 @Path("/admin")
-//@RolesAllowed("Admin")
+@RolesAllowed("Admin")
 public class Admin {
     IUserFacade facade = UserFacadeFactory.getInstance();
-    Gson gson = new Gson();
     
     @GET
     @Path("/users")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers(){
-        return Response.ok(gson.toJson(facade.getAllUsers())).build();
+        return Response.ok(facade.getAllUsers()).build();
     }
     
     @DELETE
     @Path("/user/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteUser(@PathParam("id") String id) {
-         return Response.ok(gson.toJson(facade.deleteUser(id))).build();
+         return Response.ok(facade.deleteUser(id)).build();
     }
 }
