@@ -1,24 +1,43 @@
-<style>h2 {color: darkblue;}</style>
-<p style="margin-top: 10px;color:#105cb6;font-style: italic; font-size: large">This seed shows a "typical" layout for an application that requires authentication and uses
-  <b>ROLES</b> to distinguish between what authenticated users can do.</p>
-<ul>
-  <li><b style="display: inline-block;width:14em;">Home and 'Using the Seed'</b>Can be seen by all</li>
-  <li><b style="display: inline-block;width:14em;">Page for Users</b> Access to data (REST) requires user to be authenticated as a <em>User</em> (test with user=user, password =test)</li>
-  <li><b style="display: inline-block;width:14em;">Page for Admins</b> Access to data (REST) requires user to be authenticated as an <em>Admin</em>(test with user=admin, password =test)</li>
-</ul>
+<div class="container">
+    <h1>Welcome to our site.</h1>
+    <p>
+        On our site you have the following option.
+    </p>
+    <ul>
+        <li>
+            You can see our Home site, where you can read about what you can do on our site.
+        </li>
+        <li>
+            You can create a user.
+        </li>
+        <li>
+            You can log in and user our services depending on which role you have.
+        </li>
+    </ul>
+    <p>
+        What you can do on the site depending on if you are a user or a admin.
+    </p>
+    <p>
+        <strong>
+            If you are a User.
+        </strong>
+    </p>
+    <ul>
+        <li>First option: Home - This will lead you to the Home site where you can see what you in general cen do.</li>
+        <li>Second option: Company Info - This will lead you to the Company Info site. Here you can search on companies by choosing an option, country and the give search text</li>
+        <li>Thrid option: Exchange Rate Info -  This will lead you to the Exchange Rate Info site. Here you can see the current rates from the national bank and use our currency conveter</li>
+        <li>Fourth option: Logout - This will lead you to the Home site and log you out.</li>
+    </ul>
+    <p>
+        <strong>
+            If you are a admin.
+        </strong>
+    </p>
+    <ul>
+        <li>First option: Home - This will lead you to the Home site where you can see what you in general cen do.</li>
+        <li>Second option: Documentation - This will lead you to the Documentation site. Here you can read the documentation about the site.</li>
+        <li>Thrid option: All users -  This will lead you to the All Users site. Here you can see all the current users created and delete them.</li>
+        <li>Fourth option: Logout - This will lead you to the Home site and log you out.</li>
+    </ul>
 
-<div>
-  <h2>Filter Demo</h2>
-  <ul>
-    <li>Using the checkmark filter with True: {{true | checkmark}} </li>
-    <li>Using the checkmark filter with False: {{false | checkmark}} </li>
-  </ul>
 </div>
-<div>
-  <h2>Factory + Service Demo</h2>
-  <p>This message is fetched from a factory: <span style="font-weight: bold"> {{ctrl.msgFromFactory}}</span></p>
-  <p>This message is fetched from a Service: <span style="font-weight: bold"> {{ctrl.msgFromService}}</span></p>
-</div>
-
-
-<h3 style="color: darkred;"><em>This seed is NOT meant for Real Life Projects.</em></h3>
