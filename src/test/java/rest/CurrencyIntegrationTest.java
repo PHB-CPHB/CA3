@@ -22,6 +22,22 @@ public class CurrencyIntegrationTest {
     
     public CurrencyIntegrationTest() {
     }
+    
+    private static String securityToken;
+    
+    private static void login(String role, String password) {
+    String json = String.format("{username: \"%s\", password: \"%s\"}",role,password);
+    System.out.println(json);
+    securityToken = given()
+            .contentType("application/json")
+            .body(json)
+            .when().post("/api/login")
+            .then()
+            .extract().path("token");
+    System.out.println("Token: " + securityToken);
+
+  }
+    
     @BeforeClass
     public static void setUpBeforeAll() {
         RestAssured.baseURI = "http://localhost";
@@ -35,10 +51,15 @@ public class CurrencyIntegrationTest {
      */
     @Test
     public void testGetDailyRates() {
-        given().
-        when().get("/api/currency/dailyrates").
-        then().statusCode(200).
-        body("dailyRates", equalTo("2016-11-03"), "currency[0].code", equalTo("SGD"));
+        login("user","test");
+        given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + securityToken)
+        .when()
+        .get("/api/currency/dailyrates")
+        .then()
+        .statusCode(200)
+        .body("dailyRates", equalTo("2016-11-04"), "currency[0].code", equalTo("SGD"));
     }
     
     /**
@@ -46,7 +67,10 @@ public class CurrencyIntegrationTest {
      */
     @Test
     public void testexchangeCalc() {
+        login("user","test");
         given()
+        .contentType("application/json")
+        .header("Authorization", "Bearer " + securityToken)
         .pathParam("amount", "100")
         .pathParam("fromCurrency", "USD")
         .pathParam("toCurrency", "NOK")        

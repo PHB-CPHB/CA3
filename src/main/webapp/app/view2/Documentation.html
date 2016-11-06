@@ -14,7 +14,7 @@ and open the template in the editor.
     </head>
     <body>
         <h1>
-           Documentation. 
+            Documentation. 
         </h1>
         <div>
             <ul>
@@ -28,55 +28,57 @@ and open the template in the editor.
                     </p>
                 </li>
                 <li>
+                    <h3>How to use</h3>
+                    <p>
+                        Company Info:
+                        When you are logged in, there should be a tab in the navigation bar which should say Company info.<br>
+                        To test this site, simply go to it, fill out the form. In the option bar, you have to pick anything else that "normal" or "Product Units", since the infomation<br>
+                        doesn't show up under those tabs. But simply enter a company name or vat number, and the information about that company and its product units will show up.<br>
+                        You can then click on the departments to get more information about them.<br> 
+                        <br>
+                        Exchange Rate Info:<br>
+                        When you are logged in, there should be a tab in the navigation bar which should say Exhange Rate Info.<br>
+                        The Server should automaticly make a api call every 24hour to the danish nationalbank to get exchange rate info on difference currency.<br>
+                        Since the nationalbank first updates there api after 2pm, we have created our backend such that we show the info from the day before, since<br>
+                        we are using the date as a primary key in the database. This also mean that since the nationalbank doesn't update there api in the weekend,<br>
+                        we have no data to access on sundays and mondays (since we use the data from the day before). To test this, you can either use the page "Echange Rate Info" or<br>
+                        make a simple api call in postman can be made like this: "server/projectname/api/currency/dailyrates".<br>
+                        The calulator can be tested in the same way, either use the site or with the api: server/projectname/api/currency/calculator/:amount/:fromCurrencyCode/ToCurrencyCode
+                    </p>
+                </li>
+                <li>
                     <h3>How we made the project</h3>
                     <p>
-                        We startede by making the backend.<br>
+                        We followed the assignment step by step<br>
                         we chose to make the entities and thier relations from java.<br>
-                        <img src="Images/Entity-CA2.png" alt="Entity"/>
+                        <img src="Image/Entity.png" alt="Entity"/>
                         <br>
                         Here you can see how our relations.
                         <br>
-                        <img src="Images/Facade-CA2.png" alt="Facade"/>
+                        <img src="Image/Facade.png" alt="Facade"/>
                         <br>
                         Here you can see our facades
                         <br>
-                        We made facades to InfonEntity, Phone and address. Then we made a main facade when we call the 3 other mapper facades.
-                        When our Rest calls a metode in the main facade, the main facade then calls one of the 3 mapper facades. The mapper facade then get or makes the chance in the database and returns either a Person or a Company.
+                        For this assignment we only made one facade UserFacade, which handels all with user and currency. The right way would have been to make 2 facades, one for user and one for currency.
+                        As showen above, our APIs call the facade to get/store/delete data in our database.
                     </p>
                 </li>
                 <li>
                     <h3>Rest Api</h3>
                     <p>
-                        We made two REST APIs around what we think are the two most important entity classes.<br>
-                        Those are the Person and Company entity classes, which inherit from InfoEntity,<br>
-                                from where we have dependencies to many of the other entities, such as Phone and Address.<br>
-                                The REST APIS call our facade layers, which then use JPA to make changes to our database.<br>
-                                In our REST APIs we use the standard GET, POST, PUT and DELETE methods to make our methods.<br>
-                                We have get all Persons/Companies, get Person/Company by id/cvr, get Person by Zip, create Person/Company,<br>
-                                edit Person/Company, Delete Person/Company.
+                        We have made two rest api's around creating and deleting a user, and for getting info about currency rates.<br>
+                        Most of our api calls connects to our facade, which will look in our database for information that needs to<br>
+                        be returned. One of our api calls, calls a java class, which will calculate the specifik rate, when you try<br>
+                        to use our currency calculator. We also have a api to create our database on our remote server. This is only used as<br>
+                        a "hack" to get information in our database with hashed passwords. In reality this api call should be remove from the project<br>
+                        right after we have created our databse on the remote server, but since this is a school project we have kept it,
+                        to show how we got our database.
                     </p>
                 </li>
                 <li>
-                    <h3>Error responses</h3>
+                    <h3>Error handling</h3>
                     <p>
-                        SÆT IND HER!
-                    </p>
-                </li>
-                <li>
-                    <h3>Json</h3>
-                    <p>
-                        At first we made a class called JSONConverter, where we made three methods.<br>
-                                The first one was getJSONFromObject, where we put a object as a parameter<br>
-                                and we use the GSON converter to make a string in the JSON format.<br>
-                                The second one is also called getJSONFromObject where we put a List of objects,<br>
-                                where the GSON converter does the same thing, <br>
-                                only this time it is a array of objects instead of a single object.<br>
-                                The last one is called getObjectFromJson, where we reverse the process<br>
-                                and use a String that is in JSON format to make an Object.<br>
-                                
-                                Later we found out that we didn't need the JSONConverter,<br>
-                                since the response object does the same thing when it is sent as a response.<br>
-                                So we have methods in our REST API that use both methods.
+                        We havent made error handling ourself. The project we were given allerady had some error handling.
                     </p>
                 </li>
                 <li>
@@ -84,63 +86,58 @@ and open the template in the editor.
                     <ul>
                         <li>
                             <h4>JUnit test</h4>
-                            <p>
-                                We have testet on parts of the system with JUnit.
-                                <br>
-                                We have testet to create a Person, with Phone number, Hobby and Address and Create Company with address. In Before Class.
-                                <br>
-                                We have choosen to test the following methodes.
-                                <br>
-                            </p>
-                            <ul>
-                                <li>
-                                    getPerson
-                                    <p>
-                                        Here we test if we can get a specific person by his id.
-                                    </p>
-                                </li>
-                                <li>
-                                    getPersonsByZip
-                                    <p>
-                                        Here we test if we can get all the persons form a specific zip
-                                    </p>
-                                </li>
-                                <li>
-                                    getPersonsByHobby
-                                    <p>
-                                        Here we test if we can get a person by a specific hobby
-                                    </p>
-                                </li>
-                                <li>
-                                    getCompanies
-                                    <p>
-                                        Here we test if we can get a specific company by its CVR-Number
-                                    </p>
-                                </li>
-                                <li>
-                                    addHobbyToPerson
-                                    <p>
-                                        Here we test if we can add a new hobby to a person
-                                    </p>
-                                </li>
-                            </ul>
-                            <p>
-                                The main purpose of these test was to see if our main facade did the right thing in the database.<br>
-                                So when we called a methode, we got the correct answer in the right object.<br>
-                                This made it alot eaiser to use it later on in the program.<br>
-                                We have also see that in some way it could be useful to make the test first.
-                            </p>
                         </li>
                         <li>
                             <h4>Rest Assured test</h4>
+                            <p>
+                                We have tested our API by using Rest Assured.<br>
+                                We have testet both our Admin and Currency API.<br>
+                                The reason is to make sure they work propplery before deployment.
+                            </p>
                             <ul>
                                 <li>
-                                    Hvis det skal være i punkt form ligesom JUnit.
+                                    <h3>
+                                        Admin API test.
+                                    </h3>
+                                    <img src="Image/AdminAPITest.png" alt="Admin"/>
+                                    <p>
+                                        This API have 2 methodes GET and DELETE.<br>
+                                        This API requries that an admin is logged in.<br>
+
+                                        We have only tested on the GET where we are suppose to get all the users.<br>
+                                        As we can see above this worked.<br>
+                                        <br>
+                                        We have choosen not to test the DELETE, because we are using our live database to test by.<br>
+                                        We know that normally you would never test aginst your live database.<br>
+                                        But use a derby or a self made one to test by.
+                                    </p>
+                                </li>
+                                <li>
+                                    <h3>
+                                        Currency API test.
+                                    </h3>
+                                    <img src="Image/CurrencyAPITest.png" alt=""/>
+                                    <p>
+                                        This API has two GET methodes.<br>
+                                        This test requires that a user is logged in and that its not sunday or monday.<br>
+                                        Here we have tested our GET methodes in currency api.
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            The first we have tested is getDailyRates.<br>
+                                            This methode is ment to return all the different currencies from the national bank.<br>
+                                            As described above this test will fail if you try to do it sunday or monday,<br>
+                                            because the national bank dosnt upload new currencies before monday evening.
+                                        </li>
+                                        <li>
+                                            The second methode is exchangeCalc.<br>
+                                            This methode is ment to return the amount convertet from a currency to another currency.<br>
+                                            As described above this test will also fail sunday and mondays,<br>
+                                            because the getDailyRates mothode dosnt work.
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
-                            <p>
-                                Hvis det bare skal vær tekst.
-                            </p>
                         </li>
                     </ul>
                 </li>
@@ -152,21 +149,24 @@ and open the template in the editor.
                             We really enjoyed this module and how much new stuff we have learned.
                         </li>
                         <li>
-                            The good things about this CA was that we have used all we have learned from this moduel combind.<br>
+                            The good things about this CA was that we have used all we have learned from this module combind.<br>
                             We have used it in a way that shows us how easy it is to make a server side that only runs on html protocol.
                         </li>
                         <li>
-                            We have made a program where the clint side does more of the work thanks to javascript and ajax.
+                            We have made a program where the clint side does more of the work thanks to javascript and angular.
                         </li>
                     </ul>
                     <p><Strong>Bad</Strong></p>
                     <ul>
                         <li>
-                            Some of things we felt hardest was to connect to the rest. Becuase of the poor described errors.
+                            In the short amount of time we have to complete this CA. The teachers are very absent.<br>
+                            This means that we can be stuck on some assignments, much of the time we have for the CA.<br>
                         </li>
                         <li>
-                            When we used maven through Netbeans we also got poor described errors.<br>
-                            As fatal error.
+                            The QA-site seemed to be a good idea in the beginning.<br>
+                            But now we can see that the teachers are too much absent and that the whole thing<br>
+                            about the QA is missed. It was suppose to be the students asnwering the subjects not the teacher<br>
+                            unless the were no one who could answer.
                         </li>
                     </ul>
                 </li>
@@ -176,19 +176,15 @@ and open the template in the editor.
                     <ul>
                         <li>
                             <h4>Mikkel Ziemmer</h4>
-                            <p>Made the facade, overlooked error handling, stood for uploading the server to Digital Oacen.</p>
-                        </li>
-                        <li>
-                            <h4>Ørvur Guttesen</h4>
-                            <p>Made some of the entities, Rest for company, Error handling and Documentation.</p>
+                            <p>Made the Admin part frontend and backend, unit testing.</p>
                         </li>
                         <li>
                             <h4>Kasper Vetter</h4>
-                            <p>Made Rest for Person, Rest assured test and the frontend site.</p>
+                            <p>Made Create user, Entitys, APIs (Exchanges Rates and Company Info) and Ducomentation.</p>
                         </li>
                         <li>
                             <h4>Phillip Brink</h4>
-                            <p>Made some of the entities, Junit test and Documentation.</p>
+                            <p>Made frontend for Comapny Info and Echanges Rates, Rest Assured test.</p>
                         </li>
                     </ul>
                 </li>

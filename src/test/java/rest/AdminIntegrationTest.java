@@ -59,13 +59,5 @@ public class AdminIntegrationTest {
         .body("userName[0]", equalTo("admin"),
               "roles[0].roleName[0]", equalTo("Admin"));
     }
-
-//    /**
-//     * Test of deleteUser method, of class Admin.
-//     */
-//    @Test
-//    public void testDeleteUser() {
-//        
-//    }
     
 }
